@@ -1,6 +1,6 @@
 ---
 title: "DIY Functions"
-author: "Dr. Shoemaker"
+author: "Kevin Sheard"
 date: "DATA 2401"
 output: 
   slidy_presentation: 
