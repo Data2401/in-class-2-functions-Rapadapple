@@ -121,6 +121,14 @@ Note that you'll need to rerun the function to use it in the future, you should 
 2. Expand that function so that it takes a temperature in Fahrenheit and a distance in feet and returns **both** the temperature in Celcius and the distance in meters (you'll likely need to remember the `c()` function!)
 
 ````{R convert_fn}
+fahrenheitToCelsiusAndFeetToMeters = function(fahrenheitTemp, feet) 
+{
+  celsiusTemp = (fahrenheitTemp - 32)*(5/9)
+  meters = feet/3.281
+  return(c(celsiusTemp, meters))
+}
+
+measurements = fahrenheitToCelsiusAndFeetToMeters(32, 24)
 
 
 ```
@@ -215,13 +223,21 @@ Let's take this coffee if statement and put it inside a function.
 
 ```{r}
 # make a more_coffee function
-
+more_coffee = function(num_coffees) {
+  if (num_coffees > 4) {
+  print("No more coffee for you")
+} else if (num_coffees == 0) {
+  print("Go get coffee now!!")
+} else {
+  print("Sure, have another cup")
+}
+}
 
 ```
 
 ```{r}
 # use it! 
-
+more_coffee(4)
 ```
 
 ## If inside a function, with return()
@@ -233,8 +249,8 @@ Let's make a function that ups the number of coffees, if it's less than 4, and k
 ```{r}
 get_coffee <- function(current_cups){
   if (current_cups <= 4){
-    current_cups = current_cups + 1
-    return(current_cups)
+    #current_cups = current_cups + 1
+    return(get_coffee(current_cups+1))
   } else {
     return(current_cups)
   }
@@ -295,7 +311,30 @@ Reminder of exercises from your notes:
 
 
 ```{r}
+numberIdentifier = function(num)
+{
+  if (num < 0)
+    print("The number is negative.")
+  else if(num>0)
+    print("The number is positive.")
+  else
+    print("The number is 0.")
+}
 
+numberIdentifier(0)
+
+absoluteValue = function(num)
+{
+  if(!is.numeric(num)){
+    print("Please pass a numeric value to this function")
+  }
+  else if (num < 0)
+    return(num*-1)
+  else
+    return(num)
+}
+
+absoluteValue(-8)
 
 ```
 
