@@ -40,21 +40,6 @@ roll2()
 
 ```{r}
 # Your one-roll function goes here
-name_draw = function(name1, name2, tieNum){
-  name1Draw = roll6SidedDie()
-  name2Draw = roll6SidedDie()
-  comparison_val = draw_comparison(name1Draw, name2Draw)
-  if(comparison_val = 1)
-    return(name1)
-  else if(comparison_val = 2)
-    return(name2)
-  else if(comparison_val = 3){
-    if(tieNum >=1){
-      return("Draw")
-    }
-    else
-  }
-}
 draw_comparison = function(draw1, draw2){
   if(draw1 > draw2)
     return(1)
@@ -62,6 +47,26 @@ draw_comparison = function(draw1, draw2){
     return(2)
   else
     return(3)
+}
+
+name_draw = function(name1, name2, tieNum = 0){
+  name1Draw = roll6SidedDie()
+  name2Draw = roll6SidedDie()
+  comparison_val = draw_comparison(name1Draw, name2Draw)
+  
+  if(comparison_val == 1)
+    return(c(name1, name1Draw))
+  else if(comparison_val == 2)
+    return(c(name2,name2Draw))
+  else if(comparison_val == 3){
+    if(tieNum >= 1){
+      return("Draw")
+    }
+    else
+    {
+      return(name_draw(name1,name2, tieNum+1))
+    }
+  }
 }
 
 name_draw("Kevin Sheard", "Hannah Sheard")
@@ -72,7 +77,31 @@ name_draw("Kevin Sheard", "Hannah Sheard")
 
 ```{r}
 # Your 15-roll function goes here
+roll15_draw = function(name1, name2){
+  
+  name1Win = 0
+  name2Win = 0
+  rollcount = 0
+  
+  while (rollcount <15){
+    name1Draw = roll6SidedDie()
+    name2Draw = roll6SidedDie()
+    comparison_val = draw_comparison(name1Draw, name2Draw)
+    if(comparison_val == 1)
+      name1Win = name1Win+1
+    else if(comparison_val == 2)
+      name2Win = name2Win+1
+    rollcount = rollcount+1
+  }
+  if(name1Win > name2Win)
+    return(name1)
+  else if(name2Win > name1Win)
+    return(name2)
+  else
+    return("no winner!")
+}
 
+roll15_draw("Kevin Sheard", "Hannah Sheard")
 
 ```
 
@@ -81,5 +110,38 @@ name_draw("Kevin Sheard", "Hannah Sheard")
 
 ```{r}
 # Your "cheating" function goes here
+roll6SidedDieCheat = function()
+{
+  dieNum = sample(1:6,1 , prob = c(2/15,2/15,2/15,2/15,3/15,4/15))
+  return(dieNum)
+}
+
+roll15_draw = function(name1, name2){
+  name1Win = 0
+  name2Win = 0
+  rollcount = 0
+  
+  while (rollcount < 15){
+    name1Draw = roll6SidedDieCheat()
+    name2Draw = roll6SidedDie()
+    comparison_val = draw_comparison(name1Draw, name2Draw)
+    if(comparison_val == 1){
+      name1Win = name1Win+1
+    }
+    else if(comparison_val == 2){
+      name2Win = name2Win+1
+    }
+    rollcount = rollcount+1
+  }
+  
+  if(name1Win > name2Win)
+    return(c(name1, name1Win))
+  else if(name2Win > name1Win)
+    return(c(name2, name2Win))
+  else
+    return("no winner!")
+}
+
+roll15_draw("Kevin Sheard", "Hannah Sheard")
 ```
 
